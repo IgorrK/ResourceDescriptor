@@ -14,6 +14,8 @@
 		84978E93253A11C700B8C48C /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 84978E92253A11C700B8C48C /* Assets.xcassets */; };
 		84978E96253A11C700B8C48C /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 84978E94253A11C700B8C48C /* LaunchScreen.storyboard */; };
 		84978EA0253A124000B8C48C /* DataResourceDescriptor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84978E9F253A124000B8C48C /* DataResourceDescriptor.swift */; };
+		84978EA4253A133F00B8C48C /* DecodableResourceDescriptor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84978EA3253A133F00B8C48C /* DecodableResourceDescriptor.swift */; };
+		84978EA7253A142D00B8C48C /* JSONResourceDescriptor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84978EA6253A142D00B8C48C /* JSONResourceDescriptor.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -26,6 +28,8 @@
 		84978E95253A11C700B8C48C /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		84978E97253A11C700B8C48C /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		84978E9F253A124000B8C48C /* DataResourceDescriptor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataResourceDescriptor.swift; sourceTree = "<group>"; };
+		84978EA3253A133F00B8C48C /* DecodableResourceDescriptor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DecodableResourceDescriptor.swift; sourceTree = "<group>"; };
+		84978EA6253A142D00B8C48C /* JSONResourceDescriptor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JSONResourceDescriptor.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -74,6 +78,8 @@
 			isa = PBXGroup;
 			children = (
 				84978E9F253A124000B8C48C /* DataResourceDescriptor.swift */,
+				84978EA3253A133F00B8C48C /* DecodableResourceDescriptor.swift */,
+				84978EA6253A142D00B8C48C /* JSONResourceDescriptor.swift */,
 			);
 			path = Sources;
 			sourceTree = "<group>";
@@ -150,7 +156,9 @@
 			files = (
 				84978EA0253A124000B8C48C /* DataResourceDescriptor.swift in Sources */,
 				84978E8E253A11C400B8C48C /* ViewController.swift in Sources */,
+				84978EA4253A133F00B8C48C /* DecodableResourceDescriptor.swift in Sources */,
 				84978E8A253A11C400B8C48C /* AppDelegate.swift in Sources */,
+				84978EA7253A142D00B8C48C /* JSONResourceDescriptor.swift in Sources */,
 				84978E8C253A11C400B8C48C /* SceneDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
