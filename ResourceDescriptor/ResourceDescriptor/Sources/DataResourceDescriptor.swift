@@ -37,10 +37,10 @@ protocol DataResourceDescriptor {
     var name: String { get }
 
     /// Resource file type
-    var DataResourceFileType: DataResourceFileType { get }
+    var dataResourceFileType: DataResourceFileType { get }
 
     /// Resource storage type
-    var DataResourceStorageType: DataResourceStorageType { get }
+    var dataResourceStorageType: DataResourceStorageType { get }
 
     /// Closure used for parsing the resource data to expected `DataType`
     var parsingClosure: ((_ data: Data) throws -> DataType) { get }
@@ -65,14 +65,14 @@ extension DataResourceDescriptor {
     /// - Returns: Extracted resource data.
     /// - Throws: In case if any extraction errors appear.
     private func extract() throws -> Data {
-        switch DataResourceStorageType {
+        switch dataResourceStorageType {
         case .asset:
             guard let asset = NSDataAsset(name: name) else {
                 throw DataResourceParsingError.assetNotFound(assetName: name)
             }
             return asset.data
         case .bundle(let bundle):
-            guard let path = bundle.path(forResource: name, ofType: DataResourceFileType.rawValue) else {
+            guard let path = bundle.path(forResource: name, ofType: dataResourceFileType.rawValue) else {
                 throw DataResourceParsingError.fileNotFound(fileName: name)
             }
             return try Data(contentsOf: URL(fileURLWithPath: path))

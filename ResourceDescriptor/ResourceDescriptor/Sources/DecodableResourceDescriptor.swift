@@ -16,8 +16,8 @@ struct DecodableResourceDescriptor<T: Decodable>: DataResourceDescriptor {
     // MARK: - Properties
 
     var name: String
-    var DataResourceFileType: DataResourceFileType
-    var DataResourceStorageType: DataResourceStorageType
+    var dataResourceFileType: DataResourceFileType
+    var dataResourceStorageType: DataResourceStorageType
     typealias DataType = T
 
     // MARK: - Lifecycle
@@ -33,8 +33,8 @@ struct DecodableResourceDescriptor<T: Decodable>: DataResourceDescriptor {
     ///   - parsingClosure: Optional closure used for parsing the resource data to expected `DataType`. If `nil`, default decoding approach is used.
     init(name: String, DataResourceFileType: DataResourceFileType, DataResourceStorageType: DataResourceStorageType, parsingClosure: ((_ data: Data) throws -> T)? = nil) {
         self.name = name
-        self.DataResourceFileType = DataResourceFileType
-        self.DataResourceStorageType = DataResourceStorageType
+        self.dataResourceFileType = DataResourceFileType
+        self.dataResourceStorageType = DataResourceStorageType
 
         if let parsingClosure = parsingClosure {
             self.parsingClosure = parsingClosure
