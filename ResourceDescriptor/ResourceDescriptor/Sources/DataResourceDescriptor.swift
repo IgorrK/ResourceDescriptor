@@ -8,6 +8,8 @@
 import Foundation
 import UIKit
 
+// MARK: - Related types
+
 enum DataResourceParsingError: Error {
     case assetNotFound(assetName: String)
     case fileNotFound(fileName: String)
@@ -59,29 +61,60 @@ protocol DataResourceDescriptor {
 }
 
 extension DataResourceDescriptor {
-    /// Common impleentation for resource extraction,
-    /// based on its `name`, `DataResourceFileType` and `DataResourceStorageType`.
-    ///
-    /// - Returns: Extracted resource data.
-    /// - Throws: In case if any extraction errors appear.
-    private func extract() throws -> Data {
-        switch dataResourceStorageType {
-        case .asset:
-            guard let asset = NSDataAsset(name: name) else {
-                throw DataResourceParsingError.assetNotFound(assetName: name)
-            }
-            return asset.data
-        case .bundle(let bundle):
-            guard let path = bundle.path(forResource: name, ofType: dataResourceFileType.rawValue) else {
-                throw DataResourceParsingError.fileNotFound(fileName: name)
-            }
-            return try Data(contentsOf: URL(fileURLWithPath: path))
-        }
-    }
-
     func parse() throws -> DataType {
-        let data = try extract()
+        let extractor = HelperFactory.extractor(for: dataResourceStorageType)
+        let data = try extractor.extract(fileName: name, fileType: dataResourceFileType)
         return try parsingClosure(data)
     }
 }
 
+private final class HelperFactory {
+    static func extractor(for storageType: DataResourceStorageType) -> DataResourceExtractor {
+        switch storageType {
+        case .asset: return AssetResourceExtractor()
+        case .bundle(let bundle): return BundleResourceExtractor(bundle: bundle)
+        }
+    }
+}
+
+// MARK: - DataResourceExtractor
+
+private protocol DataResourceExtractor {
+    /// Extracts a data for the resource with specified name and file type.
+    /// - Parameters:
+    ///   - fileName: File name.
+    ///   - fileType: File type.
+    ///
+    /// - Returns: Extracted resource data.
+    /// - Throws: In case if any extraction error appears.
+    func extract(fileName: String, fileType: DataResourceFileType) throws -> Data
+}
+
+private struct AssetResourceExtractor: DataResourceExtractor {
+    
+    // MARK: - DataResourceExtractor
+    
+    func extract(fileName: String, fileType: DataResourceFileType) throws -> Data {
+        if let asset = NSDataAsset(name: fileName) {
+            return asset.data
+        } else {
+            throw DataResourceParsingError.assetNotFound(assetName: fileName)
+        }
+    }
+}
+
+private struct BundleResourceExtractor: DataResourceExtractor {
+    
+    // MARK: - Properties
+    
+    let bundle: Bundle
+    
+    // MARK: - DataResourceExtractor
+    
+    func extract(fileName: String, fileType: DataResourceFileType) throws -> Data {
+        guard let path = bundle.path(forResource: fileName, ofType: fileType.rawValue) else {
+            throw DataResourceParsingError.fileNotFound(fileName: fileName)
+        }
+        return try Data(contentsOf: URL(fileURLWithPath: path))
+    }
+}
